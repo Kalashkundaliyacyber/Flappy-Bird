@@ -1,5 +1,3 @@
-
-// StartingWindow.java
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -17,29 +15,29 @@ public class StartingWindow extends JFrame {
         setLocationRelativeTo(null); // Center the window
         setResizable(false);
 
-        contentPane = new JPanel();
-        contentPane.setLayout(new BorderLayout());
-
-        // Add background image
-        ImageIcon backgroundImage = new ImageIcon(getClass().getResource("bg.jpg"));
-        JLabel backgroundLabel = new JLabel(backgroundImage);
-        contentPane.add(backgroundLabel, BorderLayout.CENTER);
+        // Create a content pane with background image
+        contentPane = new BackgroundPanel("bg.jpg");
+        contentPane.setLayout(null); // Set layout to null for manual positioning
 
         // Add message label
         messageLabel = new JLabel("Get Ready", SwingConstants.CENTER);
         messageLabel.setForeground(Color.WHITE);
         messageLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        contentPane.add(messageLabel, BorderLayout.NORTH);
+        messageLabel.setBounds(0, 50, 360, 50); // Position the label at the top center
+        contentPane.add(messageLabel);
 
         // Add player name input field
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         playerNameField = new JTextField(20);
         playerNameField.setFont(new Font("Arial", Font.PLAIN, 16));
+        playerNameField.setBounds(60, 150, 240, 30); // Position the field below the label
+        contentPane.add(playerNameField);
+
+        // Add "Enter your name" label
         JLabel nameLabel = new JLabel("Enter your name:");
-        nameLabel.setForeground(Color.WHITE);
-        inputPanel.add(nameLabel);
-        inputPanel.add(playerNameField);
-        contentPane.add(inputPanel, BorderLayout.CENTER);
+        nameLabel.setForeground(Color.WHITE); // Set the text color to white
+        nameLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        nameLabel.setBounds(60, 120, 240, 30); // Position the label above the text field
+        contentPane.add(nameLabel);
 
         // Add start button
         startButton = new JButton("Start Game");
@@ -54,7 +52,8 @@ public class StartingWindow extends JFrame {
                 }
             }
         });
-        contentPane.add(startButton, BorderLayout.SOUTH);
+        startButton.setBounds(100, 200, 160, 30); // Position the button below the text field
+        contentPane.add(startButton);
 
         setContentPane(contentPane);
         setVisible(true);
@@ -78,5 +77,27 @@ public class StartingWindow extends JFrame {
                 new StartingWindow();
             }
         });
+    }
+
+    // Inner class for JPanel with background image
+    private class BackgroundPanel extends JPanel {
+        private Image backgroundImage;
+
+        public BackgroundPanel(String imagePath) {
+            backgroundImage = new ImageIcon(getClass().getResource(imagePath)).getImage();
+            setPreferredSize(new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null))); // Set
+                                                                                                              // preferred
+                                                                                                              // size to
+                                                                                                              // match
+                                                                                                              // background
+                                                                                                              // image
+                                                                                                              // size
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
