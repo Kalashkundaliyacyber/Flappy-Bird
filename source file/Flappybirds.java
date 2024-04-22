@@ -15,6 +15,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     BufferedImage birdImg;
     BufferedImage bottomPipeImg;
     BufferedImage topPipeImg;
+    BufferedImage blurOverlay; // New: to hold the blur effect overlay
 
     // Bird
     int birdX = boardWidth / 8;
@@ -64,6 +65,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     Timer placePipeTimer;
     boolean gameOver = false;
     double score = 0;
+    boolean blurActive = false; // New: flag to indicate whether the blur overlay is active
 
     Flappybirds() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -93,6 +95,9 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
         // Game loop
         gameLoop = new Timer(1000 / 60, this);
         gameLoop.start();
+
+        // Load the blur overlay
+        blurOverlay = createBlurOverlay();
     }
 
     public BufferedImage loadImage(String path) {
@@ -102,6 +107,15 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
         icon.paintIcon(null, g, 0, 0);
         g.dispose();
         return image;
+    }
+
+    public BufferedImage createBlurOverlay() {
+        BufferedImage overlay = new BufferedImage(boardWidth, boardHeight, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = overlay.createGraphics();
+        g2d.setColor(new Color(0, 0, 0, 200)); // Semi-transparent black color
+        g2d.fillRect(0, 0, boardWidth, boardHeight);
+        g2d.dispose();
+        return overlay;
     }
 
     public void placePipe() {
@@ -120,6 +134,9 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
+        if (blurActive) { // Draw the blur overlay if it's active
+            g.drawImage(blurOverlay, 0, 0, null);
+        }
     }
 
     public void draw(Graphics g) {
@@ -172,11 +189,13 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
 
             if (collision(bird, pipe)) {
                 gameOver = true;
+                blurActive = true; // Activate blur effect when game over
             }
         }
 
         if (bird.y > boardHeight) {
             gameOver = true;
+            blurActive = true; // Activate blur effect when game over
         }
     }
 
@@ -201,6 +220,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
         velocityY = 0;
         pipes.clear();
         gameOver = false;
+        blurActive = false; // Deactivate blur effect when game reset
         score = 0;
         gameLoop.start();
         placePipeTimer.start();
@@ -226,11 +246,9 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
+    public void keyTyped(KeyEvent e) {}
 
     @Override
     public void keyReleased(KeyEvent e) {
     }
-
 }
