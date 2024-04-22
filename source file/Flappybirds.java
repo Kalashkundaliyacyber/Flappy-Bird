@@ -188,15 +188,21 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             velocityY = -9;
+            if (gameOver) 
+            {
+                bird.y = birdY;
+                velocityY = 0;
+                pipes.clear();
+                gameOver = false;
+                Score = 0;
+                gameLoop.start();
+                placepipetimer.start();
+            }
         }
     }
-
     @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
+    public void keyTyped(KeyEvent e) {}
     @Override
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyReleased(KeyEvent e) {}
 
 }
