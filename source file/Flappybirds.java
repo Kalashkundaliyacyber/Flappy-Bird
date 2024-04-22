@@ -154,9 +154,25 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
         // Draw score
         g.setColor(Color.white);
         g.setFont(new Font("Arial", Font.PLAIN, 32));
+        
         if (gameOver) {
-            g.drawString("Game Over: " + String.valueOf((int) score), 10, 35);
-        } else {
+            // Highlight "Game Over" message
+            g.setFont(new Font("Arial", Font.BOLD, 48));
+            g.setColor(Color.red);
+            String gameOverMsg = "Game Over";
+            int gameOverX = (boardWidth - g.getFontMetrics().stringWidth(gameOverMsg)) / 2;
+            int gameOverY = boardHeight / 2 - 30;
+            g.drawString(gameOverMsg, gameOverX, gameOverY);
+    
+            // Highlight score at the top right corner
+            g.setColor(Color.red);
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            String scoreString = "Score: " + (int) score;
+            int scoreX = boardWidth - g.getFontMetrics().stringWidth(scoreString) - 10;
+            int scoreY = 35;
+            g.drawString(scoreString, scoreX, scoreY);
+        }
+        else {
             g.drawString(String.valueOf((int) score), 10, 35);
         }
 
