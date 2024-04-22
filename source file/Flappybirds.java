@@ -1,10 +1,10 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.*;
 
 public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     int boardWidth = 360;
@@ -67,10 +67,13 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     double score = 0;
     boolean blurActive = false; // New: flag to indicate whether the blur overlay is active
 
-    Flappybirds() {
-        setPreferredSize(new Dimension(boardWidth, boardHeight));
-        setFocusable(true);
-        addKeyListener(this);
+    private String playerName; // Variable to store player's name
+
+    public Flappybirds(String playerName) {
+        this.playerName = playerName; // Assigning player's name
+        setPreferredSize(new Dimension(boardWidth, boardHeight)); // Setting panel size
+        setFocusable(true); // Making panel focusable for key events
+        addKeyListener(this); // Adding key listener to the panel
 
         // Load images
         background = loadImage("./flappybirdbg.png");
@@ -154,7 +157,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
         // Draw score
         g.setColor(Color.white);
         g.setFont(new Font("Arial", Font.PLAIN, 32));
-        
+
         if (gameOver) {
             // Highlight "Game Over" message
             g.setFont(new Font("Arial", Font.BOLD, 48));
@@ -163,7 +166,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
             int gameOverX = (boardWidth - g.getFontMetrics().stringWidth(gameOverMsg)) / 2;
             int gameOverY = boardHeight / 2 - 30;
             g.drawString(gameOverMsg, gameOverX, gameOverY);
-    
+
             // Highlight score at the top left corner
             g.setColor(Color.white);
             g.setFont(new Font("Arial", Font.BOLD, 32));
@@ -172,8 +175,7 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
             int scoreY = 35;
             g.drawString(scoreString, scoreX, scoreY);
 
-        }
-        else {
+        } else {
             g.drawString(String.valueOf((int) score), 10, 35);
         }
 
@@ -218,9 +220,9 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
 
     boolean collision(Bird a, Pipe b) {
         return a.x < b.x + b.width &&
-               a.x + a.width > b.x &&
-               a.y < b.y + b.height &&
-               a.y + a.height > b.y;
+                a.x + a.width > b.x &&
+                a.y < b.y + b.height &&
+                a.y + a.height > b.y;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -263,7 +265,8 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
