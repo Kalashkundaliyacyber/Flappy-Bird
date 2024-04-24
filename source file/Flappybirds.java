@@ -101,6 +101,8 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
 
         // Load the blur overlay
         blurOverlay = createBlurOverlay();
+        addKeyListener(this);
+
     }
 
     public BufferedImage loadImage(String path) {
@@ -254,13 +256,9 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            velocityY = -9;
-            if (gameOver) {
-                resetGame();
-            } else {
-                velocityY = -9;
-            }
+        System.out.println("Key pressed: " + e.getKeyCode()); // Check if this line is printed when you press space bar
+        if (e.getKeyCode() == KeyEvent.VK_SPACE && !gameOver) {
+            velocityY = -9; // Bird jumps only if the game is not over
         }
     }
 

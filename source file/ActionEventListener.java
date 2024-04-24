@@ -1,4 +1,3 @@
-
-public interface ActionEventListener {
-
+public class ActionEventListener {
+    
 }
