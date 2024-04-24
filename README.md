@@ -1,5 +1,6 @@
-Welcome to Flappy Bird Java, where nostalgia meets innovation in this classic game brought to life through Java programming.
- To embark on your avian adventure, start by entering your name and clicking the "Start" button. Once initiated, you'll find yourself in the heart of the action, controlling a colorful bird's flight through a series of perilous pipes.
+ Welcome to Flappy Bird Java, where nostalgia meets innovation in this classic game brought to life through Java programming.
+ To embark on your avian adventure, start by entering your name and clicking the "Start" button. 
+ Once initiated, you'll find yourself in the heart of the action, controlling a colorful bird's flight through a series of perilous pipes.
 
  Here to download this game :
 
