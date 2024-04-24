@@ -256,7 +256,6 @@ public class Flappybirds extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("Key pressed: " + e.getKeyCode()); // Check if this line is printed when you press space bar
         if (e.getKeyCode() == KeyEvent.VK_SPACE && !gameOver) {
             velocityY = -9; // Bird jumps only if the game is not over
         }
