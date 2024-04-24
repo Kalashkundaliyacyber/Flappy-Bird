@@ -85,13 +85,7 @@ public class StartingWindow extends JFrame {
 
         public BackgroundPanel(String imagePath) {
             backgroundImage = new ImageIcon(getClass().getResource(imagePath)).getImage();
-            setPreferredSize(new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null))); // Set
-                                                                                                              // preferred
-                                                                                                              // size to
-                                                                                                              // match
-                                                                                                              // background
-                                                                                                              // image
-                                                                                                              // size
+            setPreferredSize(new Dimension(backgroundImage.getWidth(null), backgroundImage.getHeight(null))); 
         }
 
         @Override
