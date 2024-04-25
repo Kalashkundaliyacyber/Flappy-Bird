@@ -7,6 +7,8 @@ public class StartingWindow extends JFrame {
     private JButton startButton;
     private JLabel messageLabel;
     private JPanel contentPane;
+    private Timer countdownTimer;
+    private int countdownValue = 3; // Initial countdown value
 
     public StartingWindow() {
         setTitle("Flappy Bird - Get Ready");
@@ -45,8 +47,7 @@ public class StartingWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String playerName = playerNameField.getText().trim();
                 if (!playerName.isEmpty()) {
-                    dispose(); // Close the starting window
-                    startGame(playerName);
+                    startCountdown(); // Start countdown when the button is clicked
                 } else {
                     JOptionPane.showMessageDialog(StartingWindow.this, "Please enter your name.");
                 }
@@ -59,15 +60,35 @@ public class StartingWindow extends JFrame {
         setVisible(true);
     }
 
+    // Method to start the countdown
+    private void startCountdown() {
+        countdownTimer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (countdownValue > 0) {
+                    messageLabel.setText(String.valueOf(countdownValue)); // Update message label with countdown value
+                    countdownValue--;
+                } else {
+                    dispose(); // Close the starting window
+                    countdownTimer.stop();
+                    startGame(playerNameField.getText().trim()); // Start the game
+                }
+            }
+        });
+        countdownTimer.start();
+    }
+
     private void startGame(String playerName) {
         // Start the Flappy Bird game with the provided player name
-        JFrame frame = new JFrame("Flappy Bird");
         Flappybirds flappyBirdGame = new Flappybirds(playerName);
-        frame.add(flappyBirdGame);
-        frame.setSize(360, 640);
+        flappyBirdGame.requestFocus(); // Ensure the game panel has focus
+        flappyBirdGame.setFocusable(true); // Make the game panel focusable
+        JFrame frame = new JFrame("Flappy Bird");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(360, 640);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
+        frame.add(flappyBirdGame);
         frame.setVisible(true);
     }
 
